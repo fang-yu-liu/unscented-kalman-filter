@@ -67,6 +67,11 @@ public:
   ///* Sigma point spreading parameter
   double lambda_;
 
+  ///* NIS for radar
+  double NIS_radar_;
+
+  ///* NIS for laser
+  double NIS_laser_;
 
   /**
    * Constructor
@@ -102,6 +107,20 @@ public:
    * @param meas_package The measurement at k+1
    */
   void UpdateRadar(MeasurementPackage meas_package);
+
+  /**
+	 * Updates the state and the state covariance matrix using an Unscented Kalman Filter
+   * @param meas_package The measurement at k+1
+   * @param Zsig Sigma point in the measurement space
+   * @param n_z Measurement dimension
+	 */
+	void UpdateUKF(MeasurementPackage meas_package, MatrixXd Zsig, int n_z);
+
+  /**
+   * Normalize angle between pi and -pi
+   * @param angle
+   */
+  double NormalizeAngle(double angle);
 };
 
 #endif /* UKF_H */
